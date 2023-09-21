@@ -1,6 +1,23 @@
 # infra-inotify
 Tutorial and learning report with infrastructure and usage with inotify base open source software.
 
+## inotify-tools
+
+使用 linux 工具監控目錄、檔案變動，但若使用 Docker 掛載的目錄若從目錄外產生新增、修改、刪除並不會讓此工具觸發事件。
+
+相關腳本參考 [src/inotify-tools](./src/inotify-tools)，測試方式分為兩部：
+
++ 啟用監看
+```
+bash 0.monitor-directory.sh &
+```
+> 使用 ```&``` 讓此執行推入背景運作
+
++ 執行動作
+```
+x-action.sh
+```
+
 ## 文獻
 
 + [inotify-tools](https://github.com/inotify-tools/inotify-tools)
