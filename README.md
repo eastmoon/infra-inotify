@@ -18,6 +18,12 @@ bash 0.monitor-directory.sh &
 x-action.sh
 ```
 
+## iWatch
+
+基於 inotify-tools 的進階工具，可主動發送信件與觸發執行命令，其程式基於 Perl 語言設計。
+
+考量其增加用途並無使用需求，暫不調查與撰寫範例。
+
 ## 文獻
 
 + [inotify-tools](https://github.com/inotify-tools/inotify-tools)
