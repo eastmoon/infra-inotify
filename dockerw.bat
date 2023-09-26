@@ -146,6 +146,7 @@ goto end
     )
 
     @rem execute container
+    docker rm -f monitor-%PROJECT_NAME%
     docker run -ti --rm ^
         --name monitor-%PROJECT_NAME% ^
         -v %cd%\cache\inode:/data ^
@@ -178,6 +179,7 @@ goto end
     )
 
     @rem execute container
+    docker rm -f monitor-%PROJECT_NAME%
     docker run -ti --rm ^
         --name monitor-%PROJECT_NAME% ^
         -v %cd%\cache\inode-watcher:/data ^
@@ -210,6 +212,7 @@ goto end
     )
 
     @rem execute container
+    docker rm -f monitor-%PROJECT_NAME%
     docker run -ti --rm ^
         --name monitor-%PROJECT_NAME% ^
         -v %cd%\cache\inotify-tools:/data ^
