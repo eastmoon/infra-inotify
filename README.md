@@ -1,6 +1,29 @@
 # infra-inotify
 Tutorial and learning report with infrastructure and usage with inotify base open source software.
 
+## inode
+
++ 訊息提取
+    - 使用 ```stat <file / directories>```
+    - 使用 ```ls -il <file>```
+    - 使用 ```ls -idl <directories>```
+
++ 讀取檔案
+```
+find -inum <inode-number> -exec cat {} \;
+```
+
++ 搜尋目錄或檔案列表
+```
+find <root-directory> -maxdepth 1 -type f -exec ls -i {} \;
+find <root-directory> -maxdepth 1 -type d -exec ls -id {} \;
+```
+
++ benchmark
+    - 在檔案數量提升下，搜尋檔案速度
+    - 在檔案內容增加下，```sed -n '<start>,<end>p' filename``` 速度
+    - 在檔案內容增加下，```tail -n 50``` 速度
+
 ## inotify-tools
 
 使用 linux 工具監控目錄、檔案變動，但若使用 Docker 掛載的目錄若從目錄外產生新增、修改、刪除並不會讓此工具觸發事件。
@@ -26,6 +49,10 @@ x-action.sh
 
 ## 文獻
 
++ [inode](https://zh.wikipedia.org/zh-tw/Inode)
+    - [Inodes in Linux: limit, usage and helpful commands](https://www.stackscale.com/blog/inodes-linux/)
+    - [How to find a file’s Inode in Linux](https://www.serverlab.ca/tutorials/linux/administration-linux/how-to-find-a-files-inode-in-linux/)
+    - [Using the find -exec Command Option on Linux](https://www.tutorialspoint.com/using-the-find-exec-command-option-on-linux)
 + [inotify-tools](https://github.com/inotify-tools/inotify-tools)
     - [Bash 程式設計教學與範例：inotify-tools 監控檔案變動、觸發處理動作](https://officeguide.cc/bash-tutorial-inotify-tools-file-system-monitoring/)
 + [iWatch](https://iwatch.sourceforge.net/index.html)
