@@ -124,6 +124,7 @@ goto end
     echo.
     echo Command:
     echo      inode             Startup with inode script.
+    echo      inode.watcher     Startup with inode-watcher.
     echo      inotify           Startup with inotify-tools.
     echo.
     echo Run 'cli [COMMAND] --help' for more information on a command.
@@ -158,6 +159,38 @@ goto end
     goto end
 
 :cli-inode-help
+    echo This is a Command Line Interface with project %PROJECT_NAME%
+    echo.
+    echo Options:
+    echo      --help, -h        Show more information with UP Command.
+    goto end
+
+@rem ------------------- Command "inode.watcher" method -------------------
+
+:cli-inode.watcher
+    echo ^> Startup and into container
+    @rem build image
+    docker build -t monitor:inode-watcher ./conf/docker/inode-watcher
+
+    @rem create cache
+    IF NOT EXIST cache (
+        mkdir cache
+    )
+
+    @rem execute container
+    docker run -ti --rm ^
+        --name monitor-%PROJECT_NAME% ^
+        -v %cd%\cache\inode-watcher:/data ^
+        -v %cd%\src\inode-watcher:/app ^
+        -w /app ^
+        monitor:inode-watcher
+
+    goto end
+
+:cli-inode.watcher-args
+    goto end
+
+:cli-inode.watcher-help
     echo This is a Command Line Interface with project %PROJECT_NAME%
     echo.
     echo Options:
