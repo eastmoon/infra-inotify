@@ -10,7 +10,7 @@ RUN pip install --upgrade pip
 RUN apt-get install -y coreutils
 
 # Install python requirement
-RUN pip install numpy
+RUN pip install numpy matplotlib
 
 # Setting
 WORKDIR /app

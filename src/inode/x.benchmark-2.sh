@@ -103,3 +103,6 @@ echo "-----"
 for s in $(seq 0 100); do
     step ${s} 100
 done
+
+## Draw benchmark
+python x.benchmark-2-line-chart.py
