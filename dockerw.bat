@@ -123,12 +123,46 @@ goto end
     echo      --help, -h        Show more information with CLI.
     echo.
     echo Command:
+    echo      inode             Startup with inode script.
     echo      inotify           Startup with inotify-tools.
     echo.
     echo Run 'cli [COMMAND] --help' for more information on a command.
     goto end
 
 @rem ------------------- Common Command method -------------------
+
+
+@rem ------------------- Command "inode" method -------------------
+
+:cli-inode
+    echo ^> Startup and into container
+    @rem build image
+    docker build -t monitor:inode ./conf/docker/inode
+
+    @rem create cache
+    IF NOT EXIST cache (
+        mkdir cache
+    )
+
+    @rem execute container
+    docker run -ti --rm ^
+        --name monitor-%PROJECT_NAME% ^
+        -v %cd%\cache\inode:/data ^
+        -v %cd%\src\inode:/app ^
+        -w /app ^
+        monitor:inode bash
+
+    goto end
+
+:cli-inode-args
+    goto end
+
+:cli-inode-help
+    echo This is a Command Line Interface with project %PROJECT_NAME%
+    echo.
+    echo Options:
+    echo      --help, -h        Show more information with UP Command.
+    goto end
 
 @rem ------------------- Command "inotify" method -------------------
 
