@@ -3,6 +3,10 @@ Tutorial and learning report with infrastructure and usage with inotify base ope
 
 ## inode
 
+inode 是 Linux 對檔案系統的資訊管理機制，其設計概念是將檔案與目錄的主要資訊存儲在 inode，並以此搜尋實際儲存的位元區塊。
+
+相關腳本參考 [src/inode](./src/inode)，其調查分為基礎操作與基準測試：
+
 + 訊息提取
     - 使用 ```stat <file / directories>```
     - 使用 ```ls -il <file>```
