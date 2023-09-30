@@ -44,7 +44,7 @@ find <root-directory> -maxdepth 1 -type d -exec ls -id {} \;
 
 ## inotify-tools
 
-使用 linux 工具監控目錄、檔案變動，但若使用 Docker 掛載的目錄若從目錄外產生新增、修改、刪除並不會讓此工具觸發事件。
+使用 linux 工具監控目錄、檔案變動。
 
 相關腳本參考 [src/inotify-tools](./src/inotify-tools)，測試方式分為兩部：
 
@@ -58,6 +58,25 @@ bash 0.monitor-directory.sh &
 ```
 x-action.sh
 ```
+
+需注意若使用 Docker 掛載的目錄若從目錄外產生新增、修改、刪除並不會讓此工具觸發事件，相關議題參考文獻
+
++ [inotify does not work when mounting volumes to docker daemons running in virtual machines](https://github.com/moby/moby/issues/18246)
++ [Missing file system events on mounts](https://github.com/docker/for-mac/issues/2216)
+
+依據討論文獻，在 Windows 或 Mac 環境會因為沒有檔案系統事件 ( filesystem event ) 而導致 inotify 無法正常運作，對此改善方案：
+
++ 採用讀寫目錄分離
+    - 避免讀入與寫出同目錄，導致單方向複寫異常
++ 目錄定時循環同步至內部目錄，從而觸發事件
+    - 容器自行同步，僅能使用 nsleep + rsync
+    - 主機協助同步，可在主機使用 inotfiy + rsync
+
+以上做法有以下缺失：
+
++ 需額外再主機設置監看者機制
++ 對於大檔案同步會過度消耗效率
++ 容易累積垃圾文件，需透過監看者定期清除
 
 ## iWatch
 
